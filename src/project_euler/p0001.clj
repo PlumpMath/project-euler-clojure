@@ -12,8 +12,7 @@
 (defn is-multiples-of-3-or-5?
   [x]
   (if (or (zero? (mod x 3))
-          (zero? (mod x 5))
-          (zero? (mod x 15)))
+          (zero? (mod x 5)))
     x 0))
 
 (reduce + (map is-multiples-of-3-or-5? (range 1 1000)))
