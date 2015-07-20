@@ -7,13 +7,22 @@
 ;; By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
 
-(def fibonacci
+;; Simple solution
+(def fib-1
   (->> [0 1]
        (iterate (fn [[a b]] [b (+ a b)]))
        (map first)))
 
-;; Lazy solution
 (reduce + (map (fn [x]
                  (if (and (> 4000000 x) (even? x))
                    x 0))
-               (take 1000000 fibonacci)))
+               (take 1000000 fib-1)))
+
+
+;; Optimize method
+(def fib-2
+  (lazy-cat [0 1] (map + fib-2 (rest fib-2))))
+
+(reduce +
+        (filter even?
+                (take-while #(< % 4000000) fib-2)))
